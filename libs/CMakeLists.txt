@@ -17,9 +17,10 @@ set(HPX_CANDIDATE_LIBS
     allocator_support
     asio
     assertion
-    async_distributed
     async_base
     async_combinators
+    async_cuda
+    async_distributed
     basic_execution
     batch_environments
     cache
@@ -33,7 +34,6 @@ set(HPX_CANDIDATE_LIBS
     config
     config_registry
     coroutines
-    cuda_support
     datastructures
     debugging
     distributed_executors

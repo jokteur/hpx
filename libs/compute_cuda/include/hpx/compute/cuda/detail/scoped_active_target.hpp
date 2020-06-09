@@ -11,7 +11,7 @@
 #include <hpx/config.hpp>
 
 #if defined(HPX_HAVE_CUDA)
-#include <hpx/cuda_support/target.hpp>
+#include <hpx/async_cuda/target.hpp>
 #include <hpx/modules/assertion.hpp>
 #include <hpx/modules/errors.hpp>
 
