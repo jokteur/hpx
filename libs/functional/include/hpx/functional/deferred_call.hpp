@@ -34,11 +34,9 @@ namespace hpx { namespace traits { namespace detail {
     };
 
     template <typename F, typename... Ts>
-    struct is_deferred_invocable
-      : is_invocable<typename util::decay_unwrap<F>::type,
-            typename util::decay_unwrap<Ts>::type...>
-    {
-    };
+    using is_deferred_invocable =
+        is_invocable<typename util::decay_unwrap<F>::type,
+            typename util::decay_unwrap<Ts>::type...>;
 
 }}}    // namespace hpx::traits::detail
 
@@ -57,11 +55,9 @@ namespace hpx { namespace util {
         };
 
         template <typename F, typename... Ts>
-        struct invoke_deferred_result
-          : util::invoke_result<typename util::decay_unwrap<F>::type,
-                typename util::decay_unwrap<Ts>::type...>
-        {
-        };
+        using invoke_deferred_result =
+            util::invoke_result<typename util::decay_unwrap<F>::type,
+                typename util::decay_unwrap<Ts>::type...>;
 
         ///////////////////////////////////////////////////////////////////////
         template <typename F, typename Is, typename... Ts>
