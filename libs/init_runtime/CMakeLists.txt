@@ -9,13 +9,15 @@ cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 set(init_runtime_headers
+    hpx/init.hpp
     hpx/hpx_finalize.hpp
     hpx/hpx_init.hpp
     hpx/hpx_init_impl.hpp
+    hpx/hpx_main_winsocket.hpp
     hpx/hpx_start.hpp
     hpx/hpx_start_impl.hpp
     hpx/hpx_suspend.hpp
-    hpx/hpx_main_winsocket.hpp
+    hpx/hpx_user_main_config.hpp
     hpx/init_runtime/detail/run_or_start.hpp
     hpx/init_runtime/force_linking.hpp
 )
@@ -28,7 +30,7 @@ add_hpx_module(
   GLOBAL_HEADER_GEN OFF
   SOURCES ${init_runtime_sources}
   HEADERS ${init_runtime_headers}
-  DEPENDENCIES hpx_runtime_local hpx_testing
+  DEPENDENCIES hpx_algorithms hpx_runtime_local hpx_testing
   CMAKE_SUBDIRS examples tests
 )
 

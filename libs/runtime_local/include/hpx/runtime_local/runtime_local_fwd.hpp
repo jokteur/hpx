@@ -12,7 +12,8 @@
 #include <hpx/config.hpp>
 #include <hpx/functional/function.hpp>
 #include <hpx/modules/errors.hpp>
-#include <hpx/runtime_configuration/runtime_mode.hpp>
+#include <hpx/modules/io_service.hpp>
+#include <hpx/modules/runtime_configuration.hpp>
 #include <hpx/runtime_local/config_entry.hpp>
 #include <hpx/runtime_local/detail/runtime_local_fwd.hpp>
 #include <hpx/runtime_local/get_locality_id.hpp>
@@ -20,11 +21,11 @@
 #include <hpx/runtime_local/get_os_thread_count.hpp>
 #include <hpx/runtime_local/get_thread_name.hpp>
 #include <hpx/runtime_local/get_worker_thread_num.hpp>
+#include <hpx/runtime_local/os_thread_type.hpp>
 #include <hpx/runtime_local/report_error.hpp>
 #include <hpx/runtime_local/shutdown_function.hpp>
 #include <hpx/runtime_local/startup_function.hpp>
 #include <hpx/threading_base/scheduler_base.hpp>
-#include <hpx/util_fwd.hpp>
 
 #include <cstddef>
 #include <cstdint>
@@ -33,7 +34,7 @@
 namespace hpx {
     /// Register the current kernel thread with HPX, this should be done once
     /// for each external OS-thread intended to invoke HPX functionality.
-    /// Calling this function more than once will silently fail.
+    /// Calling this function more than once will return false.
     HPX_EXPORT bool register_thread(
         runtime* rt, char const* name, error_code& ec = throws);
 
@@ -41,7 +42,18 @@ namespace hpx {
     /// the end before the external thread exists.
     HPX_EXPORT void unregister_thread(runtime* rt);
 
-    /// associated with the runtime instance the current thread is running in.
+    /// Access data for a given OS thread that was previously registered by
+    /// \a register_thread. This function must be called from a thread that was
+    /// previously registered with the runtime.
+    HPX_EXPORT runtime_local::os_thread_data get_os_thread_data(
+        std::string const& label);
+
+    /// Enumerate all OS threads that have registered with the runtime.
+    HPX_EXPORT bool enumerate_os_threads(
+        util::function_nonser<bool(os_thread_data const&)> const& f);
+
+    /// Return the runtime instance number associated with the runtime instance
+    /// the current thread is running in.
     HPX_EXPORT std::size_t get_runtime_instance_number();
 
     /// Register a function to be called during system shutdown

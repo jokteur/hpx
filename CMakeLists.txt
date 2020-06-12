@@ -331,6 +331,17 @@ else()
   )
 endif()
 
+hpx_option(
+  HPX_WITH_UNITY_BUILD
+  BOOL
+  "Enable unity build for certain build targets (experimental, requires CMake 3.16 or newer) (default OFF)"
+  OFF
+  ADVANCED
+)
+if(HPX_WITH_UNITY_BUILD AND (CMAKE_VERSION VERSION_LESS "3.16"))
+  hpx_error("HPX_WITH_UNITY_BUILD=ON but this requires CMake 3.16 or newer.")
+endif()
+
 # ##############################################################################
 # Some platforms do not support dynamic linking. Enable this to link all
 # libraries statically. This also changes some of the internals of HPX related
@@ -1513,6 +1524,15 @@ hpx_option(
 )
 if(HPX_WITH_PROMISE_ALIAS_COMPATIBILITY)
   hpx_add_config_define(HPX_HAVE_PROMISE_ALIAS_COMPATIBILITY)
+endif()
+
+# HPX_WITH_UNSCOPED_ENUM_COMPATIBILITY : introduced in V1.5.0
+hpx_option(
+  HPX_WITH_UNSCOPED_ENUM_COMPATIBILITY BOOL
+  "Enable deprecated unscoped enums (default: ON)" ON ADVANCED
+)
+if(HPX_WITH_UNSCOPED_ENUM_COMPATIBILITY)
+  hpx_add_config_define(HPX_HAVE_UNSCOPED_ENUM_COMPATIBILITY)
 endif()
 
 # ##############################################################################

@@ -142,16 +142,13 @@ endif()
 
 # List all headers (local and distributed)
 set(hpx_HEADERS
-    hpx/hpx_user_main_config.hpp
     hpx/lcos_fwd.hpp
     hpx/runtime/serialization/detail/preprocess_container.hpp
     hpx/runtime/serialization/detail/preprocess_futures.hpp
     hpx/runtime/serialization/detail/preprocess_gid_types.hpp
-    hpx/runtime/threads_fwd.hpp
     hpx/traits/managed_component_policies.hpp
     hpx/traits/pointer_category.hpp
     hpx/traits/rma_memory_region_traits.hpp
-    hpx/util_fwd.hpp
     hpx/util/serialize_exception.hpp
 )
 
@@ -541,6 +538,10 @@ if((NOT HPX_WITH_STATIC_LINKING) AND (("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
 endif()
 
 target_compile_definitions(hpx_core PRIVATE HPX_COMPONENT_NAME=hpx HPX_EXPORTS)
+
+if(HPX_WITH_UNITY_BUILD)
+  set_target_properties(hpx_core PROPERTIES UNITY_BUILD ON)
+endif()
 
 # ##############################################################################
 # Emulation of SwapContext on Windows
